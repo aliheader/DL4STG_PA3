@@ -1,0 +1,23 @@
+\questionheader{Question 1: What does a sum remember?}
+
+All checks run in \texttt{Q1-2.ipynb} over all 164 neighbourhoods with 1 to 8 neighbours.
+\begin{itemize}
+    \item \textbf{(a) Affine message:} Because the message is linear, the summed message equals $w$ times the total trend plus $c$ times the number of neighbours, so it depends only on those two numbers. Replacing two steady neighbours with one slowing and one speeding neighbour changes neither, so the readout must give the same output. Example: \{slow, fast, steady, steady, slow\} (2 steady) and \{slow, steady, steady, steady, steady\} (4 steady) produce identical messages for every tested weight pair.
+    \item \textbf{(b) Place-value message:} Give each trend its own digit in base $K+1$: slowing sends 1, steady sends $K+1$ and speeding sends $(K+1)$ squared (1, 9 and 81 for $K = 8$). A count never exceeds $K$, so digits never carry, every neighbourhood gets a unique sum, and the readout reads the three counts back as digits. Base $K+1$ is the smallest that works: in base 8, eight steady neighbours and one speeding neighbour both sum to 64. All 164 neighbourhoods give unique sums and decode exactly. To count non-steady neighbours for any neighbourhood size, send 1 for slowing or speeding and 0 for steady.
+    \item \textbf{(c) Sum, Mean and Max with one-hot messages (Table 1):} Sum keeps the exact counts, Mean keeps only the proportions, and Max keeps only which trends occur.
+\end{itemize}
+
+\vspace{4pt}\noindent\begin{minipage}{\textwidth}
+\centering\footnotesize
+\textbf{Table 1: can the readout solve each task? Vectors list the (slowing, steady, speeding) entries}\\[2pt]
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}@{}}
+\toprule
+Task & Sum & Mean & Max \\
+\midrule
+Count steady neighbours & Yes: read the steady entry & No: \{steady\} and \{steady, steady\} both give (0, 1, 0); answers 1 vs 2 & No: same pair, same vector (0, 1, 0); answers 1 vs 2 \\
+More than half slowing & Yes: slowing entry larger than steady + speeding & Yes: slowing entry above 0.5 & No: \{slow, fast\} and \{slow, slow, fast\} both give (1, 0, 1); answers no vs yes \\
+Any neighbour slowing & Yes: slowing entry above 0 & Yes: slowing entry above 0 & Yes: slowing entry equals 1 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{4pt}

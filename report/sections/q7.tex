@@ -1,0 +1,7 @@
+\questionheader{Question 7: Reproducibility and Reporting}
+
+\begin{itemize}
+    \item \textbf{Code and running:} All code is in the GitHub repository above. Q1--Q2: \texttt{pip install -r requirements.txt}, then run \texttt{Q1-2.ipynb} locally (Apple M1 Pro, 16 GB RAM, CPU, Python 3.14.6). Q3--Q6: run \texttt{Q3.ipynb} top to bottom on a Google Colab TPU runtime (1 TPU chip; host with 24 vCPUs and 50.5 GB RAM; Python 3.13.18, PyTorch 2.14.1 with \texttt{torch-tpu} 0.2.0). All packages in \texttt{requirements-colab.txt} are preinstalled on Colab. The notebook asks for a Kaggle API key, downloads the data (about 15 GB), and saves one checkpoint per model to Google Drive, so a finished model is loaded instead of retrained.
+    \item \textbf{Hyperparameters:} 8 input and 4 output steps, hidden size 32, kernel size 3, one graph layer, embedding size 10 (adaptive and hybrid). Adam with learning rate 0.001, batch size 64, MAE loss, at most 100 epochs with early stopping after 10 epochs without a better validation MAE, random seed 0. Epochs and measured training times are in Table 2 (about 5 s per epoch).
+    \item \textbf{Required items:} comparison table (Table 2), adjacency visualisations (Figures 2 and 4), predicted vs actual plots (Figure 5).
+\end{itemize}

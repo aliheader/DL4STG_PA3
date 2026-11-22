@@ -1,0 +1,22 @@
+\questionheader{AI Usage}
+
+\sectionheader{Questions 1--2: Claude and Claude Code, theory and checks}
+\begin{itemize}
+    \item I used them to understand what Sum, Mean and Max keep, and why a symmetric layer cannot tell direction. They also wrote boilerplate code for: building all 164 neighbourhoods with 1 to 8 neighbours; the affine and place-value (base $K+1$) message checks; fitting the symmetric, directional and history layers, and the 20-step rollout in Figure 1.
+    \item I used them to review code, explain errors, and reason about the outputs and graphs (fitted weights, Figure 1).
+    \item I discussed design choices with them: why base $K+1$ is the smallest base that works; the counterexamples for Mean and Max in Table 1; using a sensor's previous value to recover direction in Q2(c).
+    \item I checked every claim against the notebook outputs before writing it in the report.
+\end{itemize}
+
+\sectionheader{Questions 3--6: Claude and Claude Code, code and experiments}
+\begin{itemize}
+    \item I used them to understand the LargeST file layout and to select the San Diego slice. They also wrote boilerplate code for: 15-minute aggregation and the missing-value mask; windowing and splits; the temporal encoder, the graph layer, and the fixed, adaptive and hybrid adjacencies.
+    \item I used them to review code, explain errors, and reason about the outputs and graphs (Tables 2--3, Figures 2--5). One example: the first STGNN reached a test MAE of 138.6. Discussing it led to the residual connection in Q4(b), and I kept that failed result in the report.
+    \item I discussed design choices with them: row normalisation for the directed graph; keeping the full learned graph instead of top-$k$; the analysis in Table 3 (road-edge overlap, distance, and flow correlation against random pairs).
+    \item I chose models with the validation split only, used one seed (0) for all models, and used the test period only for the final numbers in Table 2.
+\end{itemize}
+
+\sectionheader{Report: Claude}
+\begin{itemize}
+    \item I used Claude to structure the report and tidy the wording of my answers, giving it my Assignment 2 report as a style guide. It also checked the numbers in the tables against the notebook outputs and helped me reason about the outputs and graphs. I reviewed the final text against the notebook results before submitting.
+\end{itemize}

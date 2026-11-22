@@ -1,0 +1,8 @@
+# PA-3 requirements for Questions 1-2 (Q1-2.ipynb, run locally on Python 3.14.6)
+# Install with: pip install -r requirements.txt
+# Questions 3-7 (Q3.ipynb) run on Google Colab; see requirements-colab.txt
+
+numpy==2.5.5
+matplotlib==3.11.2
+ipykernel==7.4.0
+nbconvert==7.17.2

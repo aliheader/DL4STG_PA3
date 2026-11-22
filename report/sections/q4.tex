@@ -1,0 +1,23 @@
+\questionheader{Question 4: Spatio-Temporal Traffic Forecasting}
+
+\begin{itemize}
+    \item \textbf{(a) Windows:} Each sample uses the last 8 steps (2 hours) to predict the next 4 (1 hour). Training is 2020, validation January--March 2021 and test April--December 2021. Flow is normalised with the mean (607.2) and standard deviation (483.4) of the observed 2020 values only, and windows are cut inside each split, so none crosses a boundary (35,125 / 8,629 / 26,389 windows).
+    \item \textbf{(b) Model:} Two 1D convolutions and a linear layer encode each sensor's 8 past values into 32 features (weights shared by all sensors). One graph convolution mixes each sensor's features with its neighbours' using the road graph, row-normalised because it is directed. A linear head predicts the next 4 values. The head receives the sensor's own features \textbf{plus} the graph output: without this residual connection the graph average replaced each sensor's own signal (its own weight is only about 30\% for sensor 1108639) and test MAE was 138.6, worse than using no graph. Training uses MAE loss on real readings only (Table 2).
+    \item \textbf{(c) Temporal-only baseline:} The same encoder and head without the graph layer. The graph \textbf{helps}: test MAE falls from 64.66 to 60.92 (5.8\%) and RMSE from 101.45 to 95.94. Neighbours show traffic that will arrive within the hour and congestion backing up from downstream. The gain is modest because a sensor's own last 2 hours already explain most of its next hour, and the fixed graph also averages in the opposite direction.
+\end{itemize}
+
+\vspace{4pt}\noindent\begin{minipage}{\textwidth}
+\centering\footnotesize
+\textbf{Table 2: results on the same test period (vehicles per 15 minutes, real readings, all 4 forecast steps; training on one TPU chip)}\\[2pt]
+\begin{tabular}{@{}llrrrrrrr@{}}
+\toprule
+Model & Adjacency & Parameters & Val MAE & Val RMSE & Test MAE & Test RMSE & Epochs (best) & Training time \\
+\midrule
+Temporal-only & None & 7,492 & 56.34 & 90.19 & 64.66 & 101.45 & 73 (63) & 331 s \\
+STGNN & Fixed & 8,516 & 51.57 & 82.81 & 60.92 & 95.94 & 76 (66) & 382 s \\
+STGNN & Adaptive & 22,836 & 44.15 & 71.20 & 53.47 & 84.00 & 44 (34) & 236 s \\
+STGNN & Hybrid & 22,837 & \textbf{41.82} & \textbf{67.50} & \textbf{51.09} & \textbf{80.64} & 100 (94) & 563 s \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{4pt}
